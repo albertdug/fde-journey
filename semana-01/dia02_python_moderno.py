@@ -37,3 +37,34 @@ def clasificar_sprint(velocity: int) -> str:
             return "Alto comienza a revisar flow metrics para entender mejor tu proceso"
         
 print(clasificar_sprint(15))
+
+# Percentil 85 con nuevo valor
+from statistics import quantiles
+from typing import Union
+
+def agregar_valor_y_calcular_percentil85(
+    nuevo_valor: Union[int, float], 
+    lista_existente: list[Union[int, float]]
+) -> tuple[Union[int, float], list[Union[int, float]]]:
+    """
+    Agrega un nuevo valor a la lista y calcula el percentil 85.
+    
+    Args:
+        nuevo_valor: valor numérico a agregar
+        lista_existente: lista con valores anteriores
+    
+    Returns:
+        tupla con (percentil_85, lista_actualizada)
+    """
+    lista_actualizada = lista_existente + [nuevo_valor]
+    # quantiles divide en 100 partes, el índice 84 es el percentil 85
+    percentil_85 = quantiles(lista_actualizada, n=100)[84]
+    return percentil_85, lista_actualizada
+
+# Ejemplo de uso
+valores = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+nuevo = 95
+p85, lista_nueva = agregar_valor_y_calcular_percentil85(nuevo, valores)
+print(f"Percentil 85 después de agregar {nuevo}: {p85}")
+print(f"Lista actualizada: {lista_nueva}")
+
